@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>معمل كونكريت أنوار الشطرة</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f9f9f9;
+            padding: 20px;
+            font-family: 'Cairo', sans-serif;
+        }
+        .form-control, .btn {
+            margin-bottom: 15px;
+        }
+        .success-message {
+            display: none;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mb-4 text-center">معمل كونكريت أنوار الشطرة</h2>
+        <form id="concreteForm">
+            <div class="mb-3">
+                <label for="truckNumber" class="form-label">رقم السيارة</label>
+                <input type="text" class="form-control" id="truckNumber" required>
+            </div>
+            <div class="mb-3">
+                <label for="concreteType" class="form-label">نوع الكونكريت</label>
+                <select class="form-control" id="concreteType">
+                    <option value="C20">C20</option>
+                    <option value="C25">C25</option>
+                    <option value="C30">C30</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="quantity" class="form-label">الكمية (م³)</label>
+                <input type="number" class="form-control" id="quantity" required>
+            </div>
+            <div class="mb-3">
+                <label for="contractorName" class="form-label">اسم المقاول</label>
+                <input type="text" class="form-control" id="contractorName" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">حفظ</button>
+            <p class="success-message" id="successMessage">تم الحفظ بنجاح</p>
+        </form>
+    </div>
+    <script>
+        document.getElementById('concreteForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Later: Firebase integration here
+            document.getElementById('successMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+                document.getElementById('concreteForm').reset();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
