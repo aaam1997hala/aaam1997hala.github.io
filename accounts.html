@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>حسابات المقاولين - معمل أنوار الشطرة</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; text-align: center; margin-top: 20px; }
+        .container { width: 95%; max-width: 700px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        select, input, button { width: 90%; padding: 10px; margin: 10px 0; font-size: 16px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ccc; }
+        th { background-color: #e0e0e0; }
+        button { background: green; color: white; border: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>حسابات المقاولين</h2>
+        <select id="contractorSelect">
+            <option value="سيد عاجل">سيد عاجل</option>
+            <option value="حسين علي">حسين علي</option>
+        </select>
+        <input type="number" id="amountPaid" placeholder="المبلغ المدفوع (د.ع)">
+        <button onclick="addPayment()">إضافة دفعة</button>
+        <button onclick="calculate()">عرض الحساب</button>
+
+        <div id="accountResult"></div>
+        <h3>سجل الدفعات</h3>
+        <table id="paymentsTable">
+            <thead>
+                <tr>
+                    <th>التاريخ</th>
+                    <th>المبلغ المدفوع</th>
+                </tr>
+            </thead>
+            <tbody id="paymentHistory">
+                <!-- يتم تحديثه تلقائياً -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const totalPoured = {
+            "سيد عاجل": 250,
+            "حسين علي": 180
+        };
+
+        const meterPrice = 75000;
+
+        let payments = {
+            "سيد عاجل": [],
+            "حسين علي": []
+        };
+
+        function addPayment() {
+            const contractor = document.getElementById("contractorSelect").value;
+            const amount = parseInt(document.getElementById("amountPaid").value) || 0;
+            const date = new Date().toLocaleDateString('ar-EG');
+            if (amount > 0) {
+                payments[contractor].push({ amount, date });
+                document.getElementById("amountPaid").value = "";
+                calculate();
+            }
+        }
+
+        function calculate() {
+            const contractor = document.getElementById("contractorSelect").value;
+            const poured = totalPoured[contractor];
+            const total = poured * meterPrice;
+            const paid = payments[contractor].reduce((sum, p) => sum + p.amount, 0);
+            const remaining = total - paid;
+
+            let resultHTML = `
+                <p><strong>المجموع الكلي:</strong> ${total.toLocaleString()} د.ع</p>
+                <p><strong>المجموع المدفوع:</strong> ${paid.toLocaleString()} د.ع</p>
+                <p><strong>المتبقي:</strong> ${remaining.toLocaleString()} د.ع</p>
+            `;
+            document.getElementById("accountResult").innerHTML = resultHTML;
+
+            // Update payment history table
+            const tableBody = document.getElementById("paymentHistory");
+            tableBody.innerHTML = "";
+            payments[contractor].forEach(p => {
+                tableBody.innerHTML += `<tr><td>${p.date}</td><td>${p.amount.toLocaleString()}</td></tr>`;
+            });
+        }
+    </script>
+</body>
+</html>
