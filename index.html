@@ -6,9 +6,19 @@
     <title>تسجيل صبة جديدة</title>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"></script>
-    <script>
-      const firebase = window.firebase;
-    </script>
+    <script src="app.js" defer></script>
+    <style>
+        #status {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        #status.success {
+            color: green;
+        }
+        #status.error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <h2>نموذج تسجيل صبة</h2>
@@ -29,47 +39,6 @@
         <label>ملاحظات: <textarea id="notes"></textarea></label><br><br>
         <button type="submit">خزن البيانات</button>
     </form>
-    <p id="status" style="color: green; font-weight: bold; font-size: 18px;"></p>
-
-    <script>
-      const firebaseConfig = {
-        apiKey: "AIzaSyCXzrU5KCshVh6nE6vNcWMKNX-8hQl3GCk",
-        authDomain: "concrete-anwar-shatra.firebaseapp.com",
-        projectId: "concrete-anwar-shatra",
-        storageBucket: "concrete-anwar-shatra.firebasestorage.app",
-        messagingSenderId: "793150573127",
-        appId: "1:793150573127:web:4d5fc0119c573f63fa7f62",
-        measurementId: "G-3VW8YVLSW6"
-      };
-
-      const app = firebase.initializeApp(firebaseConfig);
-      const db = firebase.firestore();
-
-      document.getElementById("pourForm").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const contractorName = document.getElementById("contractorName").value;
-        const phone = document.getElementById("phone").value;
-        const concreteType = document.getElementById("concreteType").value;
-        const truckCount = document.getElementById("truckCount").value;
-        const notes = document.getElementById("notes").value;
-        const deliveryDate = new Date().toISOString().split('T')[0];
-
-        try {
-          await db.collection("deliveries").add({
-            contractorName,
-            phone,
-            concreteType,
-            truckCount,
-            notes,
-            deliveryDate,
-            smsSent: false
-          });
-          document.getElementById("status").textContent = "تم الحفظ بنجاح";
-          document.getElementById("pourForm").reset();
-        } catch (error) {
-          document.getElementById("status").textContent = "فشل في الحفظ: " + error.message;
-        }
-      });
-    </script>
+    <p id="status"></p>
 </body>
 </html>
