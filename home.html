@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>الرئيسية - معمل أنوار الشطرة</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; text-align: center; margin-top: 20px; }
+        .container { width: 90%; max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        input, select, button { width: 90%; padding: 10px; margin: 10px 0; font-size: 16px; }
+        button { background: green; color: white; border: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>تسجيل صبة جديدة</h2>
+        <input type="text" id="contractor" placeholder="اسم المقاول">
+        <input type="number" id="quantity" placeholder="الكمية (متر مكعب)">
+        <input type="text" id="truck" placeholder="رقم السيارة">
+        <button onclick="submitBatch()">تسجيل</button>
+        <p id="status" style="color: green;"></p>
+    </div>
+
+    <script>
+        function submitBatch() {
+            var contractor = document.getElementById('contractor').value;
+            var quantity = document.getElementById('quantity').value;
+            var truck = document.getElementById('truck').value;
+            var date = new Date().toLocaleDateString('ar-EG');
+
+            if (contractor && quantity) {
+                let message = `تم صب ${quantity} متر مكعب للمقاول ${contractor} بتاريخ ${date}.`;
+                document.getElementById('status').innerText = message;
+                console.log("Batch recorded:", message);
+                alert(message); // Simulate SMS for now
+            } else {
+                document.getElementById('status').style.color = 'red';
+                document.getElementById('status').innerText = 'يرجى إدخال كل البيانات المطلوبة';
+            }
+        }
+    </script>
+</body>
+</html>
