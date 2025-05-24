@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>معمل أنوار الشطرة</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; text-align: center; margin-top: 50px; }
+        .container { width: 90%; max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        input, select, button { width: 90%; padding: 10px; margin: 10px 0; font-size: 16px; }
+        button { background: green; color: white; border: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>تسجيل الدخول</h2>
+        <input type="text" placeholder="اسم المستخدم" id="username">
+        <input type="password" placeholder="كلمة المرور" id="password">
+        <button onclick="login()">دخول</button>
+        <p id="message" style="color: red;"></p>
+    </div>
+
+    <script>
+        function login() {
+            var user = document.getElementById('username').value;
+            var pass = document.getElementById('password').value;
+            if (user === 'admin' && pass === '1234') {
+                window.location.href = 'home.html'; // placeholder for now
+            } else {
+                document.getElementById('message').innerText = 'البيانات غير صحيحة';
+            }
+        }
+    </script>
+</body>
+</html>
